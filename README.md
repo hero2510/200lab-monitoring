@@ -78,7 +78,7 @@ PromQuery
 {job="node"}
 node_cpu_seconds_total{job="node"}
 100 - avg(irate(node_cpu_seconds_total{mode="idle"}[5m])) by (instance) * 100
-node_memory_MemTotal_bytes - (node_memory_MemFree_bytes + node_memory_Cached_bytes + node_memory_Buffers_bytes) / node_memory_MemTotal_bytes * 100
-node_filesystem_size_bytes{mountpoint="/"} - node_filesystem_free_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"} * 100
+(node_memory_MemTotal_bytes - (node_memory_MemFree_bytes + node_memory_Cached_bytes + node_memory_Buffers_bytes)) / node_memory_MemTotal_bytes * 100
+(node_filesystem_size_bytes{mountpoint="/"} - node_filesystem_free_bytes{mountpoint="/"}) / node_filesystem_size_bytes{mountpoint="/"} * 100
 predict_linear(node_filesystem_free_bytes{mountpoint="/"}[1h], 4*3600) < 0 # Dự đoán trong 4 giờ có full disk không
 ```
