@@ -82,3 +82,19 @@ node_cpu_seconds_total{job="node"}
 (node_filesystem_size_bytes{mountpoint="/"} - node_filesystem_free_bytes{mountpoint="/"}) / node_filesystem_size_bytes{mountpoint="/"} * 100
 predict_linear(node_filesystem_free_bytes{mountpoint="/"}[1h], 4*3600) < 0 # Dự đoán trong 4 giờ có full disk không
 ```
+
+Preparing namespace
+```
+kubectl create ns monitoring
+kubectl create ns metrics-server
+```
+
+Install Ingress Controller
+```
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
+```
+
+Get ingress log
+```
+kubectl logs -n ingress-nginx -l app.kubernetes.io/component=controller
+```

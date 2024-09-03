@@ -1,0 +1,9 @@
+# helm repo add grafana https://grafana.github.io/helm-charts
+# helm install -n monitoring -f values.yaml grafana grafana/grafana
+
+
+persistence:
+  enabled: true
+
+# kubectl get secret --namespace monitoring grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+# kubectl port-forward --namespace monitoring svc/grafana 3000:80

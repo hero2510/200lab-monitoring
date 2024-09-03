@@ -1,0 +1,4 @@
+# helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
+# helm install -n metrics-server metrics-server metrics-server/metrics-server
+
+# https://github.com/kubernetes-sigs/metrics-server/blob/master/charts/metrics-server/values.yaml
