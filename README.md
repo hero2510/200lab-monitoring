@@ -98,3 +98,8 @@ Get ingress log
 ```
 kubectl logs -n ingress-nginx -l app.kubernetes.io/component=controller
 ```
+
+Workaround if metrics server got certificate error -> Push this line to metrics-server deployment
+```
+- --kubelet-insecure-tls
+```
