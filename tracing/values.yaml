@@ -1,0 +1,40 @@
+# helm repo add open-telemetry https://open-telemetry.github.io/opentelemetry-helm-charts
+# helm install -n tracing opentelemetry-collector -f values.yaml open-telemetry/opentelemetry-collector
+
+# https://github.com/open-telemetry/opentelemetry-helm-charts/tree/main/charts/opentelemetry-collector
+mode: deployment
+
+image:
+  repository: "otel/opentelemetry-collector-k8s"
+
+command:
+  name: "otelcol-k8s"
+
+resources:
+  limits:
+    cpu: 250m
+    memory: 512Mi
+
+config:
+  receivers:
+    otlp: # the OTLP receiver the app is sending traces to
+      protocols:
+        grpc:
+          endpoint: 0.0.0.0:4317
+        http:
+          endpoint: 0.0.0.0:4318
+  exporters:
+    otlp/jaeger:
+      endpoint: jaeger-collector:4317
+      tls:
+        insecure: true
+    otlp/tempo:
+      endpoint: tempo:4317
+      tls:
+        insecure: true
+  service:
+    pipelines:
+      traces:
+        receivers: [otlp]
+        processors: [batch]
+        exporters: [otlp/jaeger, otlp/tempo]
